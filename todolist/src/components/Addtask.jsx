@@ -29,8 +29,11 @@ class Addtask extends Component {
   handleSubmit(event){
     event.preventDefault();
     const { onCreate } = this.props;
-    onCreate(event, this.state)
-    this.setState(this.initialState);
+    const { id } = this.state;
+    if(id > 0){
+      onCreate(this.state)
+      this.setState(this.initialState);
+    }
   };
 
   render() {

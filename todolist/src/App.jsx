@@ -18,9 +18,15 @@ class App extends Component {
   }
 
   render(){
+    const {tasks} = this.state;
     return (
-      <Addtask onCreate={this.createTask}/>
-    );
+      <>
+        <Addtask onCreate={this.createTask} />
+        { tasks.map((task) => (
+          <h1>task.title</h1>
+        )) }
+      </>
+    )
   }
 }
 
