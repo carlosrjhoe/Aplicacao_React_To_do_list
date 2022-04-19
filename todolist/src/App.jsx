@@ -7,6 +7,7 @@ class App extends Component {
     this.state = {
       tasks: [],
     };
+    this.createTask = this.createTask.bind(this);
   }
 
   createTask(newTask){

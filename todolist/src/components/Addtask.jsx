@@ -1,30 +1,47 @@
 import React, { Component } from 'react';
+import generators from '../lib/generators';
 
-export default class Addtask extends Component {
+class Addtask extends Component {
   constructor(){
     super();
-    this.state = {
+
+    this.initialState = {
+      id: 0,
       title: '',
     };
 
+    this.state = this.initialState;
+
     this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+     
   }
 
   // Funções
   handleInput(event){
+    const { randomId } = generators;
     this.setState({
+      id: randomId(999999999999),
       title: event.target.value,
-    })
+    });
   }
+
+  handleSubmit(event){
+    event.preventDefault();
+    const { onCreate } = this.props;
+    onCreate(event, this.state)
+    this.setState(this.initialState);
+  };
 
   render() {
     const { title } = this.state;
-    const { onCreate } = this.props;
     return (
-      <form onSubmit={() => onCreate(this.state) }>
+      <form onSubmit={this.handleSubmit}>
         <input type="text" value={title} onChange={this.handleInput}/>
         <button type='submit'>Adicionar Tarefa</button>
       </form>
     )
   }
 }
+
+export default Addtask;
