@@ -13,11 +13,28 @@ class App extends Component {
     this.updateTask = this.updateTask.bind(this);
   }
 
+  componentDidMount(){
+    this.louderTasksFromlocalStorage();
+  }
+
+  louderTasksFromlocalStorage(){
+    let localStoragetasks = localStorage.getItem('tasks');
+    if(localStoragetasks){
+      localStoragetasks = JSON.parse(localStoragetasks);
+      this.setState({
+        tasks: localStoragetasks,
+      });
+    }
+  }
+
   createTask(newTask){
     const {tasks} = this.state;
+    const updatedTasks = [...tasks, newTask];
     this.setState({
-      tasks: [...tasks, newTask],
+      tasks: [updatedTasks],
     });
+
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
   }
 
   updateTask(updatedTask){
