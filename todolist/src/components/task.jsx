@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class Task extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
+      id: this.props.data.id,
       hasFinished: false,
     };
 
@@ -12,8 +13,15 @@ export default class Task extends Component {
   }
 
   handleCheckbox(event){
+    const { onUpdate } = this.props;
+    const currentState = this.state;
     this.setState({
       hasFinished: event.target.checked,
+    });
+
+    onUpdate({
+      ...currentState,
+      hasFinished: event.target.checked
     });
   }
 
@@ -36,5 +44,6 @@ Task.propTypes = {
     id: PropTypes.number,
     title: PropTypes.string,
   }),
+  onUpdate: PropTypes.func,
   onRemove: PropTypes.func,
 }.isRequired;
